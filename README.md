@@ -1,5 +1,7 @@
 # Near-Earth-Objects
- Allows users to search, investigate, and query NASA CSV and JSON files containing data on near Earth objects
+ Allows users to search, investigate, and query NASA CSV and JSON files containing data on near Earth objects.
+ 
+ All arguments must be passed through the command line.
 
 # Subcommands
 There are three subcommands:`inspect`, `query`, `interactive`. See below for more detail on subcommands.
