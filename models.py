@@ -14,8 +14,6 @@ A `NearEarthObject` maintains a collection of its close approaches, and a
 The functions that construct these objects use information extracted from the
 data files from NASA, so these objects should be able to handle all of the
 quirks of the data set, such as missing names and unknown diameters.
-
-You'll edit this file in Task 1.
 """
 from helpers import cd_to_datetime, datetime_to_str
 
@@ -87,7 +85,7 @@ class CloseApproach:
         self.velocity = velocity
 
         # Create an attribute for the referenced NEO, originally None.
-        self.neo = neo #TODO: Make sure this was done properly
+        self.neo = NearEarthObject(neo)  # TODO: Make sure this was done properly
 
     @property
     def time_str(self):
@@ -102,10 +100,13 @@ class CloseApproach:
         formatted string that can be used in human-readable representations and
         in serialization to CSV and JSON files.
         """
+
+        # Format: 1900-Jan-01 22:29
         # TODO: Use this object's `.time` attribute and the `datetime_to_str` function to
         # build a formatted representation of the approach time.
+        return f"at {datetime_to_str(self.time)}, {self.neo.fullname} approaches Earth"
+
         # TODO: Use self.designation and self.name to build a fullname for this object.
-        return ''
 
     def __str__(self):
         """Return `str(self)`."""
