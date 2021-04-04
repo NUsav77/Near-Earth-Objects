@@ -53,7 +53,7 @@ class NearEarthObject:
 
     def __str__(self):
         """Return `str(self)`."""
-        return f"A NearEarthObject {self.fullname} has a diameter of {self.diameter} km."
+        return f"A near Earth object, {self.fullname}, has a diameter of {self.diameter} km"
 
     def __repr__(self):
         """Return `repr(self)`, a computer-readable string representation of this object."""
@@ -102,18 +102,13 @@ class CloseApproach:
         """
 
         # Format: 1900-Jan-01 22:29
-        # TODO: Use this object's `.time` attribute and the `datetime_to_str` function to
-        # build a formatted representation of the approach time.
-        return f"at {datetime_to_str(self.time)}, {self.neo.fullname} approaches Earth"
-
-        # TODO: Use self.designation and self.name to build a fullname for this object.
+        # Seconds have been removed
+        return f"{self._designation} at {datetime_to_str(self.time)}"
 
     def __str__(self):
         """Return `str(self)`."""
-        # TODO: Use this object's attributes to return a human-readable string representation.
-        # The project instructions include one possibility. Peek at the __repr__
-        # method for examples of advanced string formatting.
-        return f"A CloseApproach ..."
+        return f"A CloseApproach of {self._designation} occurs at {self.time_str} with a velocity " \
+               f"of {self.velocity} km/s."
 
     def __repr__(self):
         """Return `repr(self)`, a computer-readable string representation of this object."""
