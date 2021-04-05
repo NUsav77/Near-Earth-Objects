@@ -74,7 +74,7 @@ class CloseApproach:
     private attribute, but the referenced NEO is eventually replaced in the
     `NEODatabase` constructor.
     """
-    def __init__(self, designation, time=None, distance=0.0, velocity=0.0, neo=None):
+    def __init__(self, designation, time=None, distance=0.0, velocity=0.0, **neo):
         """Create a new `CloseApproach`.
 
         :param info: A dictionary of excess keyword arguments supplied to the constructor.

@@ -27,7 +27,7 @@ def load_neos(neo_csv_path='data/neos.csv'):
     # TODO: Load NEO data from the given CSV file.
     neo_data = []
     with open(neo_csv_path, 'r') as f:
-        reader = csv.reader(f)
+        reader = csv.DictReader(f)
         for line in reader:
             neo_data.append(line)
     return neo_data
@@ -42,4 +42,4 @@ def load_approaches(cad_json_path='data/cad.json'):
     # TODO: Load close approach data from the given JSON file.
     with open(cad_json_path, 'r') as f:
         cad_data = json.load(f)
-    return cad_data
+    return sorted(cad_data['data'], key=lambda key: key[0])

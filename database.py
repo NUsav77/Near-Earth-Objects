@@ -1,3 +1,5 @@
+import json
+
 """A database encapsulating collections of near-Earth objects and their close approaches.
 
 A `NEODatabase` holds an interconnected data set of NEOs and close approaches.
@@ -12,6 +14,7 @@ data on NEOs and close approaches extracted by `extract.load_neos` and
 You'll edit this file in Tasks 2 and 3.
 """
 
+
 class NEODatabase:
     """A database of near-Earth objects and their close approaches.
 
@@ -20,6 +23,7 @@ class NEODatabase:
     help fetch NEOs by primary designation or by name and to help speed up
     querying for close approaches that match criteria.
     """
+
     def __init__(self, neos, approaches):
         """Create a new `NEODatabase`.
 
@@ -41,9 +45,39 @@ class NEODatabase:
         self._neos = neos
         self._approaches = approaches
 
-        # TODO: What additional auxiliary data structures will be useful?
+        # dict containing NEO with name as key
+        name_dict = {rows['name']: rows for rows in self._neos}
+        print(json.dumps(name_dict, indent=4))
+
+        # dict containing NEO with designation as key
+        des_dict = {rows['pdes']: rows for rows in self._neos}
+        print(json.dumps(des_dict, indent=4))
 
         # TODO: Link together the NEOs and their close approaches.
+        # Link NEOs and their close approach using designation
+
+        '''
+        # Print's the designation for each CAD
+        for cad_row in self._approaches:
+            print(cad_row[0])
+
+        for row in neo_link:
+            for cad_row in self._approaches:
+                for neo_row in self._neos:
+                    if cad_row[0] in neo_row[3]:
+                        neo_link[row] = {cad_row[0]: self._neos[3]}
+        print(neo_link)
+        '''
+
+        # Print's the first 5 new NEO's with their matching CAD's
+        '''
+        for neo_row in neo[:5]:
+            for cad_row in self._approaches:
+                while True:
+                    if neo_row[3] == cad_row[0]:
+                        neo += cad_row
+        print(neo[:5], "\n")
+        '''
 
     def get_neo_by_designation(self, designation):
         """Find and return an NEO by its primary designation.
