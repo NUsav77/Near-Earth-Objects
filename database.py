@@ -47,49 +47,39 @@ class NEODatabase:
         self._neos = neos
         self._approaches = approaches
 
+        # Writes a CSV file containing self._neo data
         with open('data/test.csv', 'w') as outfile:
             writer = csv.DictWriter(outfile, fieldnames=self._neos[0].keys())
             writer.writeheader()
             for row in self._neos:
                 writer.writerow(row)
 
-        for row in self._neos:
-            print(row)
-
         # dict containing NEO with name as key
         name_dict = {rows['name']: rows for rows in self._neos}
         print(json.dumps(name_dict, indent=4))
 
+        # Writes a CSV file containing name_dict data
         with open('data/name_dict.csv', 'w') as outfile:
             writer = csv.writer(outfile)
-            writer.writerows(name_dict.items())
+            for name in name_dict:
+                for vals in name_dict[name]:
+                    writer.writerows([name, vals, name_dict[name][vals]])
 
-        des_dict = {rows['pdes']: rows for rows in self._neos}
-        print(json.dumps(des_dict, indent=4))
         '''
-        name_dict_header = []
-        for row in name_dict:
-            name_dict_header.append(row[0])
-        with open('data/name_dict.csv', 'w') as outfile:
-            writer = csv.DictWriter(outfile, fieldnames=name_dict_header)
-            writer.writeheader()
-            for row in name_dict:
-                writer.writerow(row)
-        '''
-        '''
-        # dict containing NEO with designation as key
+        # dict containing NEO with pdes as key
         des_dict = {rows['pdes']: rows for rows in self._neos}
         print(json.dumps(des_dict, indent=4))
 
-        with open('data/test.csv', 'w') as outfile:
-            writer = csv.DictWriter(outfile, fieldnames='pdes')
-            writer.writeheader()
-            for row in des_dict:
-                writer.writerow(row)
+        # Writes a CSV file containing cad_dict data data
+        with open('data/cad_dict.csv', 'w') as outfile:
+            writer = csv.writer(outfile)
+            for des in des_dict:
+                for vals in des_dict[des]:
+                    writer.writerow([des, vals, des_dict[des][vals]])
 
         # dict containing CAD with des as key
         cad_dict = {rows[0]: rows for rows in self._approaches}
-        #  print(json.dumps(cad_dict, indent=4))
+        print(json.dumps(cad_dict, indent=4))
         '''
 
         '''
