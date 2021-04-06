@@ -42,4 +42,4 @@ def load_approaches(cad_json_path='data/cad.json'):
     # TODO: Load close approach data from the given JSON file.
     with open(cad_json_path, 'r') as f:
         cad_data = json.load(f)
-    return sorted(cad_data['data'], key=lambda key: key[0])
+    return cad_data  # sorted(cad_data['data'], key=lambda key: key[0])

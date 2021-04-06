@@ -1,4 +1,6 @@
 import json
+import csv
+from collections import defaultdict, OrderedDict
 
 """A database encapsulating collections of near-Earth objects and their close approaches.
 
@@ -45,16 +47,75 @@ class NEODatabase:
         self._neos = neos
         self._approaches = approaches
 
+        with open('data/test.csv', 'w') as outfile:
+            writer = csv.DictWriter(outfile, fieldnames=self._neos[0].keys())
+            writer.writeheader()
+            for row in self._neos:
+                writer.writerow(row)
+
+        for row in self._neos:
+            print(row)
+
         # dict containing NEO with name as key
         name_dict = {rows['name']: rows for rows in self._neos}
         print(json.dumps(name_dict, indent=4))
 
+        with open('data/name_dict.csv', 'w') as outfile:
+            writer = csv.writer(outfile)
+            writer.writerows(name_dict.items())
+
+        des_dict = {rows['pdes']: rows for rows in self._neos}
+        print(json.dumps(des_dict, indent=4))
+        '''
+        name_dict_header = []
+        for row in name_dict:
+            name_dict_header.append(row[0])
+        with open('data/name_dict.csv', 'w') as outfile:
+            writer = csv.DictWriter(outfile, fieldnames=name_dict_header)
+            writer.writeheader()
+            for row in name_dict:
+                writer.writerow(row)
+        '''
+        '''
         # dict containing NEO with designation as key
         des_dict = {rows['pdes']: rows for rows in self._neos}
         print(json.dumps(des_dict, indent=4))
 
+        with open('data/test.csv', 'w') as outfile:
+            writer = csv.DictWriter(outfile, fieldnames='pdes')
+            writer.writeheader()
+            for row in des_dict:
+                writer.writerow(row)
+
+        # dict containing CAD with des as key
+        cad_dict = {rows[0]: rows for rows in self._approaches}
+        #  print(json.dumps(cad_dict, indent=4))
+        '''
+
+        '''
         # TODO: Link together the NEOs and their close approaches.
         # Link NEOs and their close approach using designation
+        dd = defaultdict(list)
+        for row in (des_dict, cad_dict):
+            for key, value in row.items():
+                dd[key].append(value)
+        print(json.dumps(dd, indent=4))
+
+
+        with open("data/approaches.csv", "w") as outfile:
+            w = csv.writer(outfile, delimiter=',')
+            for row in cad_dict.items():
+                w.writerow(row)
+        '''
+
+        '''
+        # Write dd dict to file
+        # For testing purposes
+        with open("data/dd_dict.csv", "w") as outfile:
+            w = csv.writer(outfile)
+            for key, val in dd.items():
+                w.writerow([key, val])
+        '''
 
         '''
         # Print's the designation for each CAD
