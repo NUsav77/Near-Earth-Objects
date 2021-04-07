@@ -48,55 +48,62 @@ class NEODatabase:
         self._approaches = approaches
 
         # Writes a CSV file containing self._neo data
-        with open('data/test.csv', 'w') as outfile:
+        with open('data/test.csv', 'w', newline='') as outfile:
             writer = csv.DictWriter(outfile, fieldnames=self._neos[0].keys())
             writer.writeheader()
             for row in self._neos:
                 writer.writerow(row)
 
-        # dict containing NEO with name as key
-        name_dict = {rows['name']: rows for rows in self._neos}
-        print(json.dumps(name_dict, indent=4))
-
-        # Writes a CSV file containing name_dict data
-        with open('data/name_dict.csv', 'w') as outfile:
-            writer = csv.writer(outfile)
-            for name in name_dict:
-                for vals in name_dict[name]:
-                    writer.writerows([name, vals, name_dict[name][vals]])
-
-        '''
         # dict containing NEO with pdes as key
         des_dict = {rows['pdes']: rows for rows in self._neos}
-        print(json.dumps(des_dict, indent=4))
+        # print(json.dumps(des_dict, indent=4))
 
-        # Writes a CSV file containing cad_dict data data
-        with open('data/cad_dict.csv', 'w') as outfile:
+        # Writes a CSV file containing cad_dict data
+        with open('data/cad_dict.csv', 'w', newline='') as outfile:
             writer = csv.writer(outfile)
             for des in des_dict:
                 for vals in des_dict[des]:
                     writer.writerow([des, vals, des_dict[des][vals]])
 
         # dict containing CAD with des as key
-        cad_dict = {rows[0]: rows for rows in self._approaches}
-        print(json.dumps(cad_dict, indent=4))
-        '''
+        # Get 'fields' row to act as key for 'data' row
+        header = []
+        for signature in self._approaches.keys():
+            if signature == 'fields':
+                for fields in self._approaches[signature]:
+                    header.append(fields)
+        print(header)
 
-        '''
+        cad_dict = {fields: rows for rows in self._approaches}
+        print(json.dumps(cad_dict, indent=4))
+
+        # dict containing NEO with name as key
+        name_dict = {rows['name']: rows for rows in self._neos}
+        # print(json.dumps(name_dict, indent=4))
+
+        # Writes a CSV file containing name_dict data
+        with open('data/name_dict.csv', 'w', newline='') as outfile:
+            writer = csv.writer(outfile)
+            for name in name_dict:
+                for vals in name_dict[name]:
+                    writer.writerows([name, vals, name_dict[name][vals]])
+
+
         # TODO: Link together the NEOs and their close approaches.
+
         # Link NEOs and their close approach using designation
         dd = defaultdict(list)
         for row in (des_dict, cad_dict):
             for key, value in row.items():
                 dd[key].append(value)
-        print(json.dumps(dd, indent=4))
+        # print(dd)
+        # print(json.dumps(dd, indent=4))
 
-
-        with open("data/approaches.csv", "w") as outfile:
-            w = csv.writer(outfile, delimiter=',')
-            for row in cad_dict.items():
-                w.writerow(row)
-        '''
+        with open("data/linked_approaches.csv", "w") as outfile:
+            w = csv.writer(outfile)
+            for row in dd:
+                for vals in dd[row]:
+                    w.writerows([row, vals, dd[row][vals]])
 
         '''
         # Write dd dict to file
