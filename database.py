@@ -84,8 +84,8 @@ class NEODatabase:
                         cad_dict[key] = data[count]
                         count += 1
                     cad_list.append(json.dumps(cad_dict))
-        for dictline in cad_list:
-            print(dictline)
+        #for dictline in cad_list:
+        #    print(dictline)
 
         #cad_dict = {header[rows]: rows for rows in self._approaches}
         #print(json.dumps(cad_dict, indent=4))
@@ -105,18 +105,11 @@ class NEODatabase:
         # TODO: Link together the NEOs and their close approaches.
 
         # Link NEOs and their close approach using designation
-        dd = defaultdict(list)
-        for row in (des_dict, cad_dict):
-            for key, value in row.items():
-                dd[key].append(value)
-        # print(dd)
-        # print(json.dumps(dd, indent=4))
+        dd = {}
+        count = 0
+        print(cad_list[0]['des'])
 
-        with open("data/linked_approaches.csv", "w") as outfile:
-            w = csv.writer(outfile)
-            for row in dd:
-                for vals in dd[row]:
-                    w.writerows([row, vals, dd[row][vals]])
+
 
         '''
         # Write dd dict to file
