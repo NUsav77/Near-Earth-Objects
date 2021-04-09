@@ -67,7 +67,6 @@ class NEODatabase:
 
         # Creates a dict containing CAD data with fields as keys
         header = []  # Takes items in "fields" and places them into a list to later implement as keys to data items
-        cad_dict = {}
         cad_list = []
         count = 0  # Counts through each CAD item
         for row in self._approaches.keys():
@@ -76,6 +75,7 @@ class NEODatabase:
                     header.append(fields)
             if row == 'data':
                 for data in self._approaches[row]:
+                    cad_dict = {}
                     if count == len(header):
                         count = 0
                     for key in header:
@@ -83,9 +83,9 @@ class NEODatabase:
                         # cad_dict = {cad_dict[key]: data[count] for cad_dict[key] in header}
                         cad_dict[key] = data[count]
                         count += 1
-                    cad_list.append(json.dumps(cad_dict))
-        #for dictline in cad_list:
-        #    print(dictline)
+                    cad_list.append(cad_dict)
+                    # print(cad_dict)
+        print(cad_list)
 
         #cad_dict = {header[rows]: rows for rows in self._approaches}
         #print(json.dumps(cad_dict, indent=4))
@@ -105,9 +105,6 @@ class NEODatabase:
         # TODO: Link together the NEOs and their close approaches.
 
         # Link NEOs and their close approach using designation
-        dd = {}
-        count = 0
-        print(cad_list[0]['des'])
 
 
 
