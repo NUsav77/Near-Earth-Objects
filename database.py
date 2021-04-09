@@ -54,28 +54,38 @@ class NEODatabase:
             for row in self._neos:
                 writer.writerow(row)
 
-        # dict containing NEO with pdes as key
+        # Creates dict containing NEO with pdes as key
         des_dict = {rows['pdes']: rows for rows in self._neos}
         # print(json.dumps(des_dict, indent=4))
 
-        # Writes a CSV file containing cad_dict data
-        with open('data/cad_dict.csv', 'w', newline='') as outfile:
+        # Writes a CSV file containing NEO pdes data
+        with open('data/neo_pdes_dict.csv', 'w', newline='') as outfile:
             writer = csv.writer(outfile)
             for des in des_dict:
                 for vals in des_dict[des]:
                     writer.writerow([des, vals, des_dict[des][vals]])
 
-        # dict containing CAD with des as key
-        # Get 'fields' row to act as key for 'data' row
-        header = []
-        for signature in self._approaches.keys():
-            if signature == 'fields':
-                for fields in self._approaches[signature]:
+        # Creates a dict containing CAD with des as key
+        header = []  # Takes items in "fields" and places them into a list to later implement as keys to data items
+        cad_dict = {}
+        count = 0  # Counts through each CAD item
+        for row in self._approaches.keys():
+            if row == 'fields':
+                for fields in self._approaches[row]:
                     header.append(fields)
-        print(header)
-
-        cad_dict = {fields: rows for rows in self._approaches}
+            if row == 'data':
+                for data in self._approaches[row]:
+                    if count == len(header):
+                        count = 0
+                    for key in header:
+                        # print(key, ": ", data[count])
+                        # cad_dict = {cad_dict[key]: data[count] for cad_dict[key] in header}
+                        cad_dict[key] = data[count]
+                        count += 1
         print(json.dumps(cad_dict, indent=4))
+
+        #cad_dict = {header[rows]: rows for rows in self._approaches}
+        #print(json.dumps(cad_dict, indent=4))
 
         # dict containing NEO with name as key
         name_dict = {rows['name']: rows for rows in self._neos}
