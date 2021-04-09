@@ -65,7 +65,7 @@ class NEODatabase:
                 for vals in des_dict[des]:
                     writer.writerow([des, vals, des_dict[des][vals]])
 
-        # Creates a dict containing CAD with des as key
+        # Creates a dict containing CAD data with fields as keys
         header = []  # Takes items in "fields" and places them into a list to later implement as keys to data items
         cad_dict = {}
         cad_list = []
@@ -83,7 +83,9 @@ class NEODatabase:
                         # cad_dict = {cad_dict[key]: data[count] for cad_dict[key] in header}
                         cad_dict[key] = data[count]
                         count += 1
-                    print(json.dumps(cad_dict, indent=4))
+                    cad_list.append(json.dumps(cad_dict))
+        for dictline in cad_list:
+            print(dictline)
 
         #cad_dict = {header[rows]: rows for rows in self._approaches}
         #print(json.dumps(cad_dict, indent=4))
