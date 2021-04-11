@@ -79,20 +79,14 @@ class NEODatabase:
                     if count == len(header):
                         count = 0
                     for key in header:
-                        # print(key, ": ", data[count])
-                        # cad_dict = {cad_dict[key]: data[count] for cad_dict[key] in header}
                         cad_dict[key] = data[count]
                         count += 1
                     cad_list.append(cad_dict)
-                    # print(cad_dict)
-        print(cad_list)
-
-        #cad_dict = {header[rows]: rows for rows in self._approaches}
-        #print(json.dumps(cad_dict, indent=4))
+        # print(cad_list)
 
         # dict containing NEO with name as key
         name_dict = {rows['name']: rows for rows in self._neos}
-        # print(json.dumps(name_dict, indent=4))
+        print(json.dumps(name_dict, indent=4))
 
         # Writes a CSV file containing name_dict data
         with open('data/name_dict.csv', 'w', newline='') as outfile:
@@ -101,12 +95,20 @@ class NEODatabase:
                 for vals in name_dict[name]:
                     writer.writerows([name, vals, name_dict[name][vals]])
 
-
         # TODO: Link together the NEOs and their close approaches.
 
         # Link NEOs and their close approach using designation
-
-
+        linked_list = []
+        for cad in cad_list:
+            if cad['des'] in des_dict:
+                for key in des_dict:
+                    temp_dict = {}
+                    if cad['des'] == key:
+                        des_dict[key].update(cad)
+                        temp_dict[key] = des_dict[key]
+                        print(temp_dict)
+                        # linked_list.append(temp_dict)
+        # print(linked_list)
 
         '''
         # Write dd dict to file
